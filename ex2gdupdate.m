@@ -1,4 +1,4 @@
-function [ u ] = ex2gdupdate( inputx,outputy,alpha,n )
+function [ delta ] = ex2gdupdate( inputx,outputy,alpha,n )
 
 % 'inputx' is mx2 vector of inputs, first column is ones
 % 'theta' is vectors of coeffs, with each column holding identical
@@ -14,30 +14,17 @@ function [ u ] = ex2gdupdate( inputx,outputy,alpha,n )
 
 %   ***
 
-% theta = zeros(size(inputx)); %since this is old matlab, I need this
-% [i , j] = size(inputx);
-% hyp = theta.*inputx;
-% u = zeros(1,j);
-% 
-% for r = 1:n
-%     for s = 1:j
-%         u(s) = u(s) - ...
-%             (alpha/size(inputx,1))* ...
-%             sum((hyp(:,s)-outputy).*inputx(:,s));
-%     end
-% end
-
-u = zeros(size(inputx));
 [i , j] = size(inputx);
+theta = zeros(i,j);
+h = zeros(i,1);
 
-for r = 1:n
-    hyp = u.*inputx;
-    for s = 1:j
-        u(:,s) = u(:,s) - ...
-            (alpha/size(inputx,1))* ...
-            sum( (hyp(:,s)-outputy).*inputx(:,s));
+for q=1:n
+    for r=1:j
+        h(r) = sum(theta(r,:).*inputx(r,:));
     end
+    
+    delta = (alpha/i) .* sum(h-outputy).*inputx';
+    
+    % this is better, but i need to figure out how to output as 2 vectors
 end
-
-
 
