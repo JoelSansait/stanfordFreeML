@@ -1,43 +1,25 @@
 function [ u ] = ex2gdupdate( inputx,outputy,alpha,n )
+% This version is written for octave
+% When testing in cli the answer MUST be 'result'
 
-% 'inputx' is mx2 vector of inputs, first column is ones
-% 'theta' is vectors of coeffs, with each column holding identical
-%   values
-% 'outputy' is vector of output
-% 'n' is the number of iterations
+  [i , j] = size(inputx);
+  u = zeros(1,j); % column vector 
 
-% Takeaway lessons
-%   j refers to features
-%   if you have two features (x1,x2), then you have thetas (vector const)
-%   x1 and x2 are vectors themselves!
-%   the "i" refers to individual elements in the vectors
+  for q=1:n
+  errSum = (inputx*u' - outputy).*inputx; 
+  u = u - (alpha/i*sum(errSum,1));
+  end
+  
+  
 
-%   ***
 
-% theta = zeros(size(inputx)); %since this is old matlab, I need this
-% [i , j] = size(inputx);
-% hyp = theta.*inputx;
-% u = zeros(1,j);
-% 
-% for r = 1:n
-%     for s = 1:j
-%         u(s) = u(s) - ...
-%             (alpha/size(inputx,1))* ...
-%             sum((hyp(:,s)-outputy).*inputx(:,s));
-%     end
-% end
-
-u = zeros(size(inputx));
-[i , j] = size(inputx);
-
-for r = 1:n
-    hyp = u.*inputx;
-    for s = 1:j
-        u(:,s) = u(:,s) - ...
-            (alpha/size(inputx,1))* ...
-            sum( (hyp(:,s)-outputy).*inputx(:,s));
-    end
-end
+        
+        
+        
+        
+        
+        
+        
 
 
 
